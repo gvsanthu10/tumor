@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<title>Prediction</title>
+
+
+<body style="margin: 0;width: 100vw;height: 100vh;background: #edf2f2;display: flex;align-items: center;text-align: center;justify-content: center;place-items: center;overflow: hidden;font-family: 'Open Sans',serif;">
+
+		<div class="container" style='position: relative;width: 800px;height: 1000px;border-radius: 20px;padding: 40px;box-sizing: border-box;background: #eef3f3;box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px white;'>
+    <div class="brand-logo" style="height: 140px; width: 206px; background: url('https://raw.githubusercontent.com/gvsanthu10/tumor/main/ribbon.png'); margin: auto; border-radius: 5%; box-sizing: border-box; box-shadow: 7px 7px 10px #cbced1, -7px -7px 10px white;">
+    </div>
+    <div class="brand-title" style="margin-top: 10px;font-weight: 900;font-size: 1.8rem; color: #008080; letter-spacing: 1px;">Ovarian tumor prediction</div>
+      
+    <!-- start of the form -->
+    <form action = "{{url_for('predict')}}" method ="POST" >
+     
+    <div class="inputs" style="text-align: left; margin-top: 30px; font-size: 110%;">
+      
+		<div>
+      <input type="checkbox" id="solid" name="Tumor" value = "solid" unchecked style="zoom: 1.5;vertical-align: middle;">
+      <label for="scales">Entirely solid</label>
+    </div>
+    
+      <div>
+      <input type="checkbox" id="solid_necrosis" name="Tumor" value = "solid_necrosis" unchecked style="zoom: 1.5; vertical-align: middle;">
+      <label for="scales">Solid with areas of necrosis</label>
+    </div>
+    
+      <div>
+      <input type="checkbox" id="cystic" name="Tumor" value = "cystic" unchecked style="zoom: 1.5; vertical-align: middle;">
+      <label for="scales">Purely cystic lesion</label>
+    </div>
+    
+    
+      <div>
+      <input type="checkbox" id="unilocular" name="Tumor" value = "unilocular" unchecked style="zoom: 1.5; vertical-align: middle;">
+      <label for="scales">Unilocular</label>
+    </div>
+    
+      <div>
+      <input type="checkbox" id="honeycomb" name="Tumor" value = "honeycomb" unchecked style="zoom: 1.5; vertical-align: middle;">
+      <label for="scales">Multilocular honeycomb-like locules (either pure cystic or mixed)</label>
+    </div>
+    
+      <div>
+      <input type="checkbox" id="vegetations" name="Tumor" value = "vegetations" unchecked style="zoom: 1.5; vertical-align: middle;">
+      <label for="scales">Small vegetations in the wall of the cystic lesion</label>
+    </div>
+    
+      <div>
+      <input type="checkbox" id="papillary" name="Tumor" value = "papillary" unchecked style="zoom: 1.5; vertical-align: middle;">
+      <label for="scales">Papillary projections within the cystic lesion</label>
+    </div>
+    
+      <div>
+      <input type="checkbox" id="multi" name="Tumor" value = "multi" unchecked style="zoom: 1.5; vertical-align: middle;">
+      <label for="scales">Bilaterality or multiple lesions</label>
+    </div>
+    
+      <div>
+      <input type="checkbox" id="hypointese" name="Tumor" value = "hypointese" unchecked style="zoom: 1.5; vertical-align: middle;">
+      <label for="scales">Hypointense in T2 and T1 of the solid tumour or the solid part of the mixed tumour</label>
+    </div>
+    
+      <div>
+      <input type="checkbox" id="calcification" name="Tumor" value = "calcification" unchecked style="zoom: 1.5; vertical-align: middle;">
+      <label for="scales">Calcification</label>
+    </div>
+    
+      <div>
+      <input type="checkbox" id="haemo" name="Tumor" value = "haemo" unchecked style="zoom: 1.5; vertical-align: middle; vertical-align: middle;">
+      <label for="scales">Haemorrhage</label>
+    </div>
+    
+      <div>
+      <input type="checkbox" id="dark" name="Tumor" value = "dark" unchecked style="zoom: 1.5; vertical-align: middle;">
+      <label for="scales">T2 dark spot and T2 shading</label>
+    </div>
+    
+      <div>
+      <input type="checkbox" id="fat" name="Tumor" value = "fat" unchecked style="zoom: 1.5; vertical-align: middle;">
+      <label for="scales">Fat (best seen as hyper T1 signal which reduced in FAT SAT sequences)</label>
+    </div>
+    
+      <div>
+      <input type="checkbox" id="diffusion" name="Tumor" value = "diffusion" unchecked style="zoom: 1.5; vertical-align: middle;">
+      <label for="scales">Diffusion restriction</label>
+    </div>
+    
+      <div>
+      <input type="checkbox" id="endo" name="Tumor" value = "endo" unchecked style="zoom: 1.5; vertical-align: middle;">
+      <label for="scales">Synchronous endometrial carcinoma or hyperplasia</label>
+    </div> <!-- local div end of the last input -->
+     
+    
+    <button type="submit" style="margin-top: 20px;
+    background: #008080;
+    height: 40px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 800;
+    font-size: 100%;
+    font-family: 'Open Sans',serif;
+    box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px white;
+    transition: 0.5s;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 50%;
+    padding: 0;
+    border: none;
+    outline: none;box-sizing: border-box;">
+      
+      Predict</button>
+    
+    </div> <!-- end of inputs -->
+      
+      <!--Prediction Result-->
+
+      <div>   <!-- table.. -->    
+        <table class="styled-table" style="border-collapse: collapse;
+        font-size: 0.9em;
+        font-family: 'Open Sans',serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        text-align: left;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 30px;
+        border-radius: 6px;">
+            <thead>
+                <tr style="background-color: #008080;color: #ffffff; text-align: center;">
+                    <th colspan="2">Predictions</th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for item in result %}
+                <tr>
+                    <td>{{item}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+          </div>   <!-- table.. --> 
+    </form> 	<!-- end of the form -->
+    <div>
+      <a href="{{ url_for('disclaimer') }}" style="color:#008080; position: absolute; bottom: 10px;">Disclaimer</a>
+    </div>
+    </div>           <!-- container.. -->
+	</body>
+</html>
