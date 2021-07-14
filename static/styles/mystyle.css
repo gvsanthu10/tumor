@@ -28,7 +28,7 @@ body {
 .brand-logo {
   height: 140px;
   width: 225px;
-  background: url("https://www.ncic.nhs.uk/application/files/3715/6751/8832/NCIC_Logo.png");
+  background: url("https://raw.githubusercontent.com/gvsanthu10/tumor/main/logo.png");
   margin: auto;
   border-radius: 5%;
   box-sizing: border-box;
